@@ -13,12 +13,14 @@ class User(AbstractUser):
         (ADMIN, 'admin'),
     )
 
+    email = models.EmailField(unique=True, blank=False)
     bio = models.TextField(
         'Биография',
         max_length=200,
         blank=True,
     )
-    role = models.PositiveSmallIntegerField(
+    role = models.CharField(
+        max_length=20,
         choices=ROLE_CHOICES,
         default='user'
     )
