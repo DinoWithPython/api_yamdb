@@ -108,6 +108,17 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 # Подключаем свою модель юзверя
 AUTH_USER_MODEL = 'reviews.User'
+<<<<<<< HEAD
+||||||| merged common ancestors
+<<<<<<<<< Temporary merge branch 1
+=======
+
+
+# Настройки для почты
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+ADMIN_EMAIL = "yamdbm@simple.com"
+>>>>>>> b96cdc552408193883fcf87ec9ac30a4ddc94ed1
 
 <<<<<<< HEAD
 =======
@@ -129,11 +140,23 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # Настройки для почты
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 ADMIN_EMAIL = "yamdbm@simple.com"
 
+=======
+>>>>>>> b96cdc552408193883fcf87ec9ac30a4ddc94ed1
+||||||| merged common ancestors
+||||||||| 79b0e19
+=========
+
+# Настройки для почты
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+ADMIN_EMAIL = "yamdbm@simple.com"
+>>>>>>>>> Temporary merge branch 2
 =======
 >>>>>>> b96cdc552408193883fcf87ec9ac30a4ddc94ed1
