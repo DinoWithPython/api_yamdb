@@ -40,7 +40,7 @@ def send_token(request):
         return JsonResponse(
             {"Error": "Пользователь не найден!"},
             status=status.HTTP_404_NOT_FOUND
-    )
+        )
     confirmation_code = request.data["confirmation_code"]
     refresh = RefreshToken.for_user(user)
 
