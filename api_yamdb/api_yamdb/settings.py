@@ -109,6 +109,15 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 # Подключаем свою модель юзверя
 AUTH_USER_MODEL = 'reviews.User'
 
+<<<<<<< HEAD
+=======
+
+# Настройки для почты
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+ADMIN_EMAIL = "yamdbm@simple.com"
+
+>>>>>>> b96cdc552408193883fcf87ec9ac30a4ddc94ed1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -119,9 +128,12 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(weeks=5),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+<<<<<<< HEAD
 
 # Настройки для почты
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 ADMIN_EMAIL = "yamdbm@simple.com"
 
+=======
+>>>>>>> b96cdc552408193883fcf87ec9ac30a4ddc94ed1

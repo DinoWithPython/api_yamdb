@@ -8,6 +8,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+<<<<<<< HEAD
+=======
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+>>>>>>> b96cdc552408193883fcf87ec9ac30a4ddc94ed1
 
 from reviews.models import User, Category, Genre, Title, Review, Comment
 
