@@ -1,3 +1,3 @@
-from django.shortcuts import render
+"""Классы представления приложения reviews."""
 
-# Create your views here.
+from django.shortcuts import render

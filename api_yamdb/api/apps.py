@@ -1,3 +1,5 @@
+"""API приложения yamdb."""
+
 from django.apps import AppConfig
 
 
