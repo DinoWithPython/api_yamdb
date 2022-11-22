@@ -1,3 +1,8 @@
+"""Админ панель."""
+
 from django.contrib import admin
 
-# Register your models here.
+from .models import Category, Comment, Genre, GenreTitle, Review, Title, User
+
+reviews_models = [Category, Comment, Genre, GenreTitle, Review, Title, User]
+admin.site.register(reviews_models)

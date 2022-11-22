@@ -1,3 +1,5 @@
+"""Миксины."""
+
 from rest_framework import filters, mixins, viewsets
 
 from .permissions import IsAdminOrReadOnly
@@ -9,6 +11,8 @@ class CreateListDestroyViewset(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
+    """Класс миксин создания и удаления."""
+
     serializer_class = None
     permission_classes = (IsAdminOrReadOnly,)
     search_fields = ('name',)

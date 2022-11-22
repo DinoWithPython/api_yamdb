@@ -1,18 +1,11 @@
 """Эндпоинты api."""
 
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework import routers
 
-from .views import (
-    CategoryViewSet,
-    CommentViewSet,
-    GenreViewSet,
-    ReviewViewSet,
-    TitleViewSet,
-    UserViewSet,
-    send_confirmation_code,
-    send_token,
-)
+from .views import (CategoryViewSet, CommentViewSet, GenreViewSet,
+                    ReviewViewSet, TitleViewSet, UserViewSet,
+                    send_confirmation_code, send_token)
 
 router_v1 = routers.DefaultRouter()
 router_v1.register('users', UserViewSet, basename='user')
