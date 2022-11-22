@@ -1,8 +1,8 @@
 # api_yamdb
 
-## Технологии:
+### Технологии:
 ![Python](https://img.shields.io/badge/Python-3.7-green)
-![Django](https://img.shields.io/badge/Django-2.2.12-green)
+![Django](https://img.shields.io/badge/Django-2.2.16-green)
 
 ### Как запустить проект:
 
@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 Выполнить миграции:
 
-```Python
+```
 python manage.py makemigrations reviews
 python manage.py migrate
 ```
