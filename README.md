@@ -38,7 +38,7 @@ pip install -r requirements.txt
 Выполнить миграции:
 
 ```
-python manage.py makemigrations reviews
+python manage.py makemigrations users
 python manage.py migrate
 ```
 
