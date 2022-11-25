@@ -1,78 +1,9 @@
 """Модели приложения reviews."""
 
-from django.contrib.auth.models import AbstractUser
-from django.core.validators import (EmailValidator, MaxValueValidator,
-                                    MinValueValidator, RegexValidator)
+from django.core.validators import (MaxValueValidator, MinValueValidator)
 from django.db import models
 
-from .validators import validate_title_year, validate_username
-
-
-class User(AbstractUser):
-    """Модель юзера."""
-
-    USER = 'user'
-    ADMIN = 'admin'
-    MODERATOR = 'moderator'
-    USER_ROLE = [
-        ('user', USER),
-        ('admin', ADMIN),
-        ('moderator', MODERATOR),
-    ]
-
-    username = models.CharField(
-        validators=(
-            validate_username,
-            RegexValidator(
-                regex=r'^[\w.@+-]+$',
-                message='Недопустимый никнейм',
-            )),
-        max_length=150,
-        unique=True,
-        blank=False,
-        null=False
-    )
-    email = models.EmailField(
-        'Электронная почта',
-        max_length=254,
-        unique=True,
-        validators=[EmailValidator],
-    )
-    first_name = models.TextField('Имя', max_length=150, blank=True)
-    last_name = models.TextField('Фамилия', max_length=150, blank=True)
-    bio = models.TextField('Биография', blank=True)
-    role = models.CharField(
-        'Роль', max_length=30, choices=USER_ROLE, default='user'
-    )
-
-    @property
-    def is_user(self):
-        """Проверка на пользователя."""
-        return self.role == self.USER
-
-    @property
-    def is_admin(self):
-        """Проверка на админа."""
-        return self.role == self.ADMIN
-
-    @property
-    def is_moderator(self):
-        """Проверка на модератора."""
-        return self.role == self.MODERATOR
-
-    class Meta:
-        """Мета класс пользователя."""
-
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ('id',)
-
-        constraints = [
-            models.UniqueConstraint(
-                fields=('username', 'email'),
-                name='unique_username_email',
-            ),
-        ]
+from users.models import User
 
 
 class Category(models.Model):
@@ -85,6 +16,7 @@ class Category(models.Model):
         """Мета класс категории."""
 
         ordering = ('name',)
+        verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
     def __str__(self):
@@ -102,6 +34,7 @@ class Genre(models.Model):
         """Мета класс жанра."""
 
         ordering = ('name',)
+        verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
 
     def __str__(self):
@@ -113,9 +46,7 @@ class Title(models.Model):
     """Произведения, к которым пишут отзывы."""
 
     name = models.CharField('Произведение', max_length=500)
-    year = models.SmallIntegerField(
-        'Год выпуска', db_index=True, validators=(validate_title_year,)
-    )
+    year = models.SmallIntegerField('Год выпуска', db_index=True)
     description = models.TextField(blank=True, verbose_name='Описание')
     genre = models.ManyToManyField(
         Genre, through='GenreTitle', verbose_name='Жанр'
@@ -133,6 +64,7 @@ class Title(models.Model):
         """Мета класс произведения."""
 
         ordering = ('name',)
+        verbose_name = 'Произведение'
         verbose_name_plural = 'Произведения'
 
     def __str__(self):
@@ -157,6 +89,7 @@ class GenreTitle(models.Model):
     class Meta:
         """Мета класс жанров произведения."""
 
+        verbose_name = 'Жанр произведения'
         verbose_name_plural = 'Произведения и жанры'
 
     def __str__(self):
@@ -178,8 +111,8 @@ class Review(models.Model):
     text = models.TextField(max_length=200)
     score = models.PositiveSmallIntegerField(
         validators=[
-            MinValueValidator(1, 'Поставьте рейтинг от 1 до 10'),
-            MaxValueValidator(10, 'Поставьте рейтинг от 1 до 10'),
+            MinValueValidator(1, 'Оценка не может быть меньше 1'),
+            MaxValueValidator(10, 'Оценка не может быть выше 10'),
         ],
         verbose_name='Рейтинг',
     )
@@ -192,10 +125,12 @@ class Review(models.Model):
     class Meta:
         """Мета класс отзыва."""
 
+        ordering = ['-pub_date']
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
         constraints = [
             models.UniqueConstraint(
                 fields=["author", "title"], name="unique_review")]
-        ordering = ["-pub_date"]
 
     def __str__(self):
         """Описание отзыва."""
@@ -215,6 +150,12 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(
         'Дата добавления', auto_now_add=True, db_index=True
     )
+
+    class Meta:
+        """Мета класс комментария."""
+
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 
     def __str__(self):
         """Мета класс комментария."""

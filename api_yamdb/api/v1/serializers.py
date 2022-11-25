@@ -1,9 +1,10 @@
 """Сериалайзеры приложения api."""
-
+from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
-from reviews.models import Category, Comment, Genre, Review, Title, User
+
+from reviews.models import Category, Comment, Genre, Review, Title
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -40,16 +41,16 @@ class TitleReadonlySerializer(serializers.ModelSerializer):
     class Meta:
         """Мета класс произведения."""
 
-        fields = (
-            'id',
-            'name',
-            'year',
-            'rating',
-            'description',
-            'genre',
-            'category',
-        )
+        fields = '__all__'
         model = Title
+
+    def validate_title_year(self, value):
+        """Валидация года произведения."""
+        if value > timezone.now().year:
+            raise ValidationError(
+                ('Год выпуска %(value)s больше текущего.'),
+                params={'value': value},
+            )
 
 
 class TitleSerializer(serializers.ModelSerializer):
@@ -69,59 +70,6 @@ class TitleSerializer(serializers.ModelSerializer):
         model = Title
 
 
-class UserSerializer(serializers.ModelSerializer):
-    """Сериализатор для пользователей."""
-
-    class Meta:
-        """Мета класс пользователя."""
-
-        fields = (
-            'bio',
-            'email',
-            'first_name',
-            'last_name',
-            'role',
-            'username'
-        )
-        model = User
-        extra_kwargs = {
-            'password': {'required': False},
-            'username': {'required': True},
-            'email': {'required': True},
-        }
-
-
-class TokenSerializer(serializers.Serializer):
-    """Сериализатор для токена."""
-
-    username = serializers.CharField(max_length=150, required=True)
-
-    class Meta:
-        """Мета класс токена."""
-
-        fields = '__all__'
-        model = User
-
-
-class MeSerializer(serializers.ModelSerializer):
-    """Сериализатор пользователя."""
-
-    role = serializers.CharField(read_only=True)
-
-    class Meta:
-        """Мета класс пользователя."""
-
-        model = User
-        fields = (
-            'bio',
-            'email',
-            'first_name',
-            'last_name',
-            'role',
-            'username'
-        )
-
-
 class ReviewSerializer(serializers.ModelSerializer):
     """Сериалайзер для модели Reviews."""
 
@@ -130,16 +78,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only=True,
         default=serializers.CurrentUserDefault()
     )
-
-    def validate_score(self, value):
-        """Валидация оценки."""
-        if value <= 0:
-            raise serializers.ValidationError('Оценка должна быть больше 0!')
-        elif value > 10:
-            raise serializers.ValidationError(
-                'Оценка должна быть не больше 10!'
-            )
-        return value
 
     def validate(self, data):
         """Валидация отзыва."""

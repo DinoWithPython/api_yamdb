@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_filters',
     'api',
     'reviews',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -110,7 +111,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 # Подключаем свою модель юзверя
-AUTH_USER_MODEL = 'reviews.User'
+AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
