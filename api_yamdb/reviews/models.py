@@ -154,6 +154,7 @@ class Comment(models.Model):
     class Meta:
         """Мета класс комментария."""
 
+        ordering = ('-pub_date',)
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 
