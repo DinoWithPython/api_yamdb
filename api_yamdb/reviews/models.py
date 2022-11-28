@@ -1,6 +1,6 @@
 """Модели приложения reviews."""
 
-from django.core.validators import (MaxValueValidator, MinValueValidator)
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from users.models import User
@@ -125,7 +125,7 @@ class Review(models.Model):
     class Meta:
         """Мета класс отзыва."""
 
-        ordering = ['-pub_date']
+        ordering = ('-pub_date',)
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
         constraints = [

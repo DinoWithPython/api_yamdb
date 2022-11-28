@@ -1,4 +1,5 @@
 """Сериалайзеры приложения users."""
+
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator, RegexValidator
 from rest_framework import serializers
@@ -31,7 +32,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate_username(self, value):
         """Валидация имени пользователя."""
-        if value == 'me':
+
+        name = value.lower()
+        if name == 'me':
             raise ValidationError('Имя пользователя "me" запрещено.')
         return value
 
